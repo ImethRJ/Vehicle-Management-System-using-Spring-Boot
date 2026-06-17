@@ -58,7 +58,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     @Transactional
     public Vehicle updateVehicle(@NonNull Long id, @NonNull Vehicle vehicleDetails) {
-        @NonNull Vehicle existingVehicle = vehicleRepository.findById(id)
+        Vehicle existingVehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with ID: " + id));
 
         // Enforce business rule: VIN must be unique across other vehicles
@@ -80,8 +80,9 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional
+    @SuppressWarnings("null")
     public void deleteVehicle(@NonNull Long id) {
-        @NonNull Vehicle existingVehicle = vehicleRepository.findById(id)
+        Vehicle existingVehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with ID: " + id));
         vehicleRepository.delete(existingVehicle);
     }

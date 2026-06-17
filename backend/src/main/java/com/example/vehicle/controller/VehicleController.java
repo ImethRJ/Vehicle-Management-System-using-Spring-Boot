@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class VehicleController {
      * Endpoint: GET /api/vehicles/{id}
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Vehicle> getVehicleById(@PathVariable("id") Long id) {
+    public ResponseEntity<Vehicle> getVehicleById(@PathVariable("id") @NonNull Long id) {
         Vehicle vehicle = vehicleService.getVehicleById(id);
         return ResponseEntity.ok(vehicle);
     }
@@ -54,7 +55,7 @@ public class VehicleController {
      * Endpoint: POST /api/vehicles
      */
     @PostMapping
-    public ResponseEntity<Vehicle> createVehicle(@Valid @RequestBody Vehicle vehicle) {
+    public ResponseEntity<Vehicle> createVehicle(@Valid @RequestBody @NonNull Vehicle vehicle) {
         Vehicle createdVehicle = vehicleService.createVehicle(vehicle);
         return new ResponseEntity<>(createdVehicle, HttpStatus.CREATED);
     }
@@ -65,8 +66,8 @@ public class VehicleController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Vehicle> updateVehicle(
-            @PathVariable("id") Long id,
-            @Valid @RequestBody Vehicle vehicleDetails) {
+            @PathVariable("id") @NonNull Long id,
+            @Valid @RequestBody @NonNull Vehicle vehicleDetails) {
         Vehicle updatedVehicle = vehicleService.updateVehicle(id, vehicleDetails);
         return ResponseEntity.ok(updatedVehicle);
     }
@@ -76,7 +77,7 @@ public class VehicleController {
      * Endpoint: DELETE /api/vehicles/{id}
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteVehicle(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteVehicle(@PathVariable("id") @NonNull Long id) {
         vehicleService.deleteVehicle(id);
         return ResponseEntity.noContent().build();
     }
