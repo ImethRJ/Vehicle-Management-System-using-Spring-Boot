@@ -4,6 +4,7 @@ import com.example.vehicle.exception.ResourceNotFoundException;
 import com.example.vehicle.model.Vehicle;
 import com.example.vehicle.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,14 +40,14 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional(readOnly = true)
-    public Vehicle getVehicleById(Long id) {
+    public Vehicle getVehicleById(@NonNull Long id) {
         return vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with ID: " + id));
     }
 
     @Override
     @Transactional
-    public Vehicle createVehicle(Vehicle vehicle) {
+    public Vehicle createVehicle(@NonNull Vehicle vehicle) {
         // Enforce business rule: VIN must be unique
         if (vehicleRepository.existsByVin(vehicle.getVin())) {
             throw new IllegalArgumentException("A vehicle with VIN '" + vehicle.getVin() + "' already exists.");
@@ -56,8 +57,8 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional
-    public Vehicle updateVehicle(Long id, Vehicle vehicleDetails) {
-        Vehicle existingVehicle = vehicleRepository.findById(id)
+    public Vehicle updateVehicle(@NonNull Long id, @NonNull Vehicle vehicleDetails) {
+        @NonNull Vehicle existingVehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with ID: " + id));
 
         // Enforce business rule: VIN must be unique across other vehicles
@@ -79,8 +80,8 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional
-    public void deleteVehicle(Long id) {
-        Vehicle existingVehicle = vehicleRepository.findById(id)
+    public void deleteVehicle(@NonNull Long id) {
+        @NonNull Vehicle existingVehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with ID: " + id));
         vehicleRepository.delete(existingVehicle);
     }

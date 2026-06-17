@@ -1,6 +1,7 @@
 package com.example.vehicle.service;
 
 import com.example.vehicle.model.Vehicle;
+import org.springframework.lang.NonNull;
 import java.util.List;
 
 /**
@@ -21,20 +22,20 @@ public interface VehicleService {
     /**
      * Retrieves a vehicle by its ID.
      */
-    Vehicle getVehicleById(Long id);
+    Vehicle getVehicleById(@NonNull Long id);
 
     /**
      * Creates a new vehicle.
      */
-    Vehicle createVehicle(Vehicle vehicle);
+    Vehicle createVehicle(@NonNull Vehicle vehicle);
 
     /**
      * Updates an existing vehicle.
      */
-    Vehicle updateVehicle(Long id, Vehicle vehicleDetails);
+    Vehicle updateVehicle(@NonNull Long id, @NonNull Vehicle vehicleDetails);
 
     /**
      * Deletes a vehicle by its ID.
      */
-    void deleteVehicle(Long id);
+    void deleteVehicle(@NonNull Long id);
 }
